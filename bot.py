@@ -5,7 +5,12 @@ from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
 
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 
+
 TOKEN = os.environ.get("TOKEN", "")
+
+UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL, "")
+
+LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", ""))
 
 API_ID = int(os.environ.get("API_ID", 12345))
 
@@ -43,7 +48,23 @@ async def pdf(client,message):
   
  
  file_id = str(message.photo.file_id)
- ms = await message.reply_text("Converting to PDF ......")
+ if UPDATE_CHANNEL:
+  try:
+   user = await client.get_chat_member(UPDATE_CHANNEL, message.chat.id)
+   if user.status == "kicked":
+    await message.reply_text(" Sorry, You are **B A N N E D**")
+    return
+  except UserNotParticipant:
+   #await message.reply_text(f"Join @{update_channel} To Use Me")
+   await message.reply_text(
+    text="**Please Join My Update Channel Before Using Me..**",
+    reply_markup=InlineKeyboardMarkup([
+    [ InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{update_channel}")]
+    ])
+   )
+   return
+  else:
+   ms = await message.reply_text("Converting to PDF ......")
  file = await client.download_media(file_id)
  
  image = Image.open(file)
