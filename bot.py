@@ -55,7 +55,7 @@ async def pdf(client,message):
     await message.reply_text(" Sorry, You are **B A N N E D**")
     return
   except UserNotParticipant:
-   #await message.reply_text(f"Join @{UPDATE_CHANNEL} To Use Me")
+   # await message.reply_text(f"Join @{UPDATE_CHANNEL} To Use Me")
    await message.reply_text(
     text="**Please Join My Update Channel Before Using Me..**",
     reply_markup=InlineKeyboardMarkup([
@@ -71,7 +71,7 @@ async def pdf(client,message):
  if LOG_CHANNEL:
   try:
    file = await photo.forward(LOG_CHANNEL)
-   trace_msg = await file.reply_text(f'**User Name:** {message.from_user.mention(style="md")}\n\n**User Id:** `{message.from_user.id}`)
+   #trace_msg = await file.reply_text(f'**User Name:** {message.from_user.mention(style="md")}\n\n**User Id:** `{message.from_user.id}`)
  
  image = Image.open(file)
  img = image.convert('RGB')
