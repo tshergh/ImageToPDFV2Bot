@@ -59,7 +59,7 @@ async def pdf(client,message):
    await message.reply_text(
     text="**Please Join My Update Channel Before Using Me..**",
     reply_markup=InlineKeyboardMarkup([
-    [ InlineKeyboardButton(text="Join Updates Channel", url=f"https:/
+    [ InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{UPDATE_CHANNEL}")]
     ])
    )
    return
