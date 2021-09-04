@@ -55,11 +55,11 @@ async def pdf(client,message):
     await message.reply_text(" Sorry, You are **B A N N E D**")
     return
   except UserNotParticipant:
-   #await message.reply_text(f"Join @{update_channel} To Use Me")
+   #await message.reply_text(f"Join @{UPDATE_CHANNEL} To Use Me")
    await message.reply_text(
     text="**Please Join My Update Channel Before Using Me..**",
     reply_markup=InlineKeyboardMarkup([
-    [ InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{update_channel}")]
+    [ InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{UPDATE _CHANNEL}")]
     ])
    )
    return
