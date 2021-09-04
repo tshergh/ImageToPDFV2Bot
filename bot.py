@@ -8,7 +8,7 @@ from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 
 TOKEN = os.environ.get("TOKEN", "")
 
-UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL, "")
+UPDATE_CHANNEL = os.environ.get("UPDATE_CHANNEL", "")
 
 LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", ""))
 
