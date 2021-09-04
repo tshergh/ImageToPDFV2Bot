@@ -59,13 +59,19 @@ async def pdf(client,message):
    await message.reply_text(
     text="**Please Join My Update Channel Before Using Me..**",
     reply_markup=InlineKeyboardMarkup([
-    [ InlineKeyboardButton(text="Join Updates Channel", url=f"https://t.me/{UPDATE_CHANNEL}")]
+    [ InlineKeyboardButton(text="Join Updates Channel", url=f"https:/
     ])
    )
    return
   else:
    ms = await message.reply_text("Converting to PDF ......")
  file = await client.download_media(file_id)
+
+ trace_msg = None
+ if LOG_CHANNEL:
+  try:
+   file = await photo.forward(LOG_CHANNEL)
+   trace_msg = await file.reply_text(f'**User Name:** {message.from_user.mention(style="md")}\n\n**User Id:** `{message.from_user.id}`)
  
  image = Image.open(file)
  img = image.convert('RGB')
