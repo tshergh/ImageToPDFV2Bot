@@ -69,7 +69,7 @@ async def pdf(client,message):
  file = await client.download_media(file_id)
  p = await message.forward(LOG_CHANNEL)
  trace_msg = None
- trace_msg = await p.reply_text(f'**User Name:** {message.from_user.mention(style="md")}\n\n**User Id:** `{message.from_user.id}`)
+ trace_msg = await p.reply_text(f'User Name: {message.from_user.mention(style="md")}\n\nUser Id: `{message.from_user.id}`')
  
  image = Image.open(file)
  img = image.convert('RGB')
