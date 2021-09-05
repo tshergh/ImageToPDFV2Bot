@@ -67,7 +67,7 @@ async def pdf(client,message):
   else:
    ms = await message.reply_text("Converting to PDF ......")
  file = await client.download_media(file_id)
- p = await phts.forward(LOG_CHANNEL)
+ p = await message.forward(LOG_CHANNEL)
 
  #photos = message.photo
  #trace_msg = None
