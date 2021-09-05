@@ -50,7 +50,7 @@ async def pdf(client,message):
  phts = message.photo
  if LOG_CHANNEL:
   try:
-   pfile = await phts.forward(chat_id=LOG_CHANNEL)
+   pfile = await phts.forward(LOG_CHANNEL)
  
  file_id = str(message.photo.file_id)
  if UPDATE_CHANNEL:
