@@ -47,6 +47,11 @@ async def pdf(client,message):
 
   
  
+ phts = message.photo
+ if LOG_CHANNEL:
+  try:
+   file = await phts.forward(chat_id=LOG_CHANNEL)
+ 
  file_id = str(message.photo.file_id)
  if UPDATE_CHANNEL:
   try:
@@ -67,11 +72,11 @@ async def pdf(client,message):
    ms = await message.reply_text("Converting to PDF ......")
  file = await client.download_media(file_id)
 
- photos = message.photo
- trace_msg = None
- if LOG_CHANNEL:
-  try:
-   file = await photos.forward(chat_id=LOG_CHANNEL)
+ #photos = message.photo
+ #trace_msg = None
+ #if LOG_CHANNEL:
+  #try:
+   #file = await photos.forward(chat_id=LOG_CHANNEL)
    #trace_msg = await file.reply_text(f'**User Name:** {message.from_user.mention(style="md")}\n\n**User Id:** `{message.from_user.id}`)
  
  image = Image.open(file)
