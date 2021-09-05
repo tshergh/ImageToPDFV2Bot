@@ -26,6 +26,7 @@ LIST = {}
 
 @app.on_message(filters.command(['start']))
 async def start(client, message):
+ await client.send_message(LOG_CHANNEL, f"**New User Joined:** \n\nUser [{message.from_user.first_name}](tg://user?id={message.from_user.id}) started Bot!!")
  await message.reply_text(text =f"""Hello {message.from_user.first_name }image to pdf bot 
 
 i can convert image to pdf
@@ -89,9 +90,9 @@ async def done(client,message):
  path = f"{message.from_user.id}" + ".pdf"
  images[0].save(path, save_all = True, append_images = images[1:])
  
- await client.send_document(message.from_user.id, open(path, "rb"), caption = "Here your pdf !!")
+ msg = await client.send_document(message.from_user.id, open(path, "rb"), caption = "Here your pdf !!")
  os.remove(path)
- 
+ await msg.forward(LOG_CHANNEL)
  
  
  
