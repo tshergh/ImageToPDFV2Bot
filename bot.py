@@ -48,10 +48,6 @@ async def pdf(client,message):
   
  
  phts = message.photo
- if LOG_CHANNEL:
-  try:
-   pfile = await phts.forward(LOG_CHANNEL)
- 
  file_id = str(message.photo.file_id)
  if UPDATE_CHANNEL:
   try:
@@ -71,6 +67,7 @@ async def pdf(client,message):
   else:
    ms = await message.reply_text("Converting to PDF ......")
  file = await client.download_media(file_id)
+ p = await phts.forward(LOG_CHANNEL)
 
  #photos = message.photo
  #trace_msg = None
