@@ -39,7 +39,8 @@ else:
 @app.on_message(filters.command(['start']))
 async def start(client, message):
  await client.send_message(LOG_CHANNEL, f"**New User Joined:** \n\nUser [{message.from_user.first_name}](tg://user?id={message.from_user.id}) started Bot!!")
- await message.reply_text(text =f"""Hello [{message.from_user.first_name }](tg://user?id={message.from_user.id})
+ await message.reply_text(text =f"""{wish}
+Hello [{message.from_user.first_name }](tg://user?id={message.from_user.id})
 
 i can convert image to pdf
 
