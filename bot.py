@@ -45,10 +45,10 @@ Hello [{message.from_user.first_name }](tg://user?id={message.from_user.id})
 i can convert image to pdf
 
 This Bot Created by @AswanthVK""") #,reply_to_message_id = message.message_id ,  reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton("Support Group" ,url="https://t.me/NewBotzSupport"),
-                    InlineKeyboardButton("Update Channel", url="https://t.me/NewBotz") ]       ]        ) )
+            #[
+                #[
+                    #InlineKeyboardButton("Support Group" ,url="https://t.me/NewBotzSupport"),
+                    #InlineKeyboardButton("Update Channel", url="https://t.me/NewBotz") ]       ]        ) )
 
 
 
