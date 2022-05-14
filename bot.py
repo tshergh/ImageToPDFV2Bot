@@ -1,4 +1,6 @@
 import os
+import time
+import datetime
 from PIL import Image
 from pyrogram import Client,filters 
 from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
@@ -23,6 +25,16 @@ app = Client(
 
 
 LIST = {}
+
+currentTime = datetime.datetime.now()
+
+if currentTime.hour < 12:
+	wish = "Good morning"
+elif 12 <= currentTime.hour < 18:
+	wish = 'Good afternoon.'
+else:
+	wish = 'Good evening.'
+
 
 @app.on_message(filters.command(['start']))
 async def start(client, message):
