@@ -1,6 +1,9 @@
-import os
+import os, re
 import time
 import datetime
+import asyncio
+import string
+import random
 from PIL import Image
 import requests
 import weasyprint
