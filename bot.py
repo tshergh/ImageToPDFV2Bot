@@ -2,8 +2,13 @@ import os
 import time
 import datetime
 from PIL import Image
+import requests
+import weasyprint
+import urllib.request
+from translation import Translation 
+from bs4 import BeautifulSoup
 from pyrogram import Client,filters 
-from pyrogram.types import (InlineKeyboardButton,  InlineKeyboardMarkup)
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
 from pyrogram.errors.exceptions.bad_request_400 import UserNotParticipant
 
@@ -38,17 +43,15 @@ else:
 
 @app.on_message(filters.command(['start']))
 async def start(client, message):
- await client.send_message(LOG_CHANNEL, f"**New User Joined:** \n\nUser [{message.from_user.first_name}](tg://user?id={message.from_user.id}) started Bot!!")
+ #await client.send_message(LOG_CHANNEL, f"**New User Joined:** \n\nUser [{message.from_user.first_name}](tg://user?id={message.from_user.id}) started Bot!!")
  await message.reply_text(text =f"""{wish}
 Hello [{message.from_user.first_name }](tg://user?id={message.from_user.id})
 
-i can convert image to pdf
-
-This Bot Created by @AswanthVK""") #,reply_to_message_id = message.message_id ,  reply_markup=InlineKeyboardMarkup(
-            #[
-                #[
-                    #InlineKeyboardButton("Support Group" ,url="https://t.me/NewBotzSupport"),
-                    #InlineKeyboardButton("Update Channel", url="https://t.me/NewBotz") ]       ]        ) )
+i can convert image to pdf & Web URL to pdf."""),reply_to_message_id = message.message_id ,  reply_markup=InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton("Support Group" ,url="https://t.me/NewBotzSupport"),
+                    InlineKeyboardButton("Update Channel", url="https://t.me/NewBotz") ]       ]        ) )
 
 
 
@@ -108,5 +111,76 @@ async def done(client,message):
  await msg.forward(LOG_CHANNEL)
  
  
+@app.on_message(filters.private & filters.text)
+async def link_extract(client, message):
+    if not message.text.startswith("http"):
+        await message.reply_text(
+            Translation.INVALID_LINK_TXT,
+            reply_to_message_id=message.message_id,
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton("Close", callback_data="close_btn")]]
+            )
+        )
+        return
+    file_name = str()
+    #
+    thumb_path = os.path.join(os.getcwd(), "img")
+    if not os.path.isdir(thumb_path):
+        os.makedirs(thumb_path)
+        urllib.request.urlretrieve(Translation.THUMB_URL, os.path.join(thumb_path, "thumbnail.png"))
+    else:
+        pass
+    #
+    thumbnail = os.path.join(os.getcwd(), "img", "thumbnail.png")
+    #
+    await client.send_chat_action(message.chat.id, "typing")
+    msg = await message.reply_text(Translation.PROCESS_TXT, reply_to_message_id=message.message_id)
+    try:
+        req = requests.get(message.text)
+        # using the BeautifulSoup module
+        soup = BeautifulSoup(req.text, 'html.parser')
+        # extracting the title frm the link
+        for title in soup.find_all('title'):
+            file_name = str(title.get_text()) + '.pdf'
+        # Creating the pdf file
+        weasyprint.HTML(message.text).write_pdf(file_name)
+    except Exception:
+        await msg.edit_text(
+            Translation.ERROR_TXT,
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton("Close", callback_data="close_btn")]]
+            )
+        )
+        return
+    try:
+        await msg.edit(Translation.UPLOAD_TXT)
+    except Exception:
+        pass
+    await client.send_chat_action(message.chat.id, "upload_document")
+    await message.reply_document(
+        document=file_name,
+        caption=Translation.CAPTION_TXT.format(file_name),
+        thumb=thumbnail
+    )
+    print(
+        '@' + message.from_user.username if message.from_user.username else message.from_user.first_name,
+        "has downloaded the file",
+        file_name
+    )
+    try:
+        os.remove(file_name)
+    except Exception:
+        pass
+    await msg.delete()
+
+
+# --------------------------------- Close Button Call Back --------------------------------- #
+@app.on_callback_query(filters.regex(r'^close_btn$'))
+async def close_button(self, cb: CallbackQuery):
+    await self.delete_messages(
+        cb.message.chat.id,
+        [cb.message.reply_to_message.message_id, cb.message.message_id]
+    )
+
  
 app.run()
