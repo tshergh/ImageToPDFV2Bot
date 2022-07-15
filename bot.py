@@ -34,6 +34,8 @@ app = Client(
 
 LIST = {}
 
+os.environ['TZ'] = "Kolkata"
+
 currentTime = datetime.datetime.now()
 
 if currentTime.hour < 12:
