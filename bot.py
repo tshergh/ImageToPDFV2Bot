@@ -166,12 +166,12 @@ async def link_extract(client, message):
     except Exception:
         pass
     await client.send_chat_action(message.chat.id, "upload_document")
-    msg = await message.reply_document(
+    msgg = await message.reply_document(
         document=file_name,
         caption=Translation.CAPTION_TXT.format(file_name),
         thumb=thumbnail
     )
-    await msg.forward(LOG_CHANNEL)
+    await msgg.forward(LOG_CHANNEL)
     print(
         '@' + message.from_user.username if message.from_user.username else message.from_user.first_name,
         "has downloaded the file",
