@@ -55,7 +55,7 @@ async def start(client, message):
 أنا  بوت أستطيع  ان احول صور الى pdf وكذلك رابط الى pdf وكذلك  ضغط ملف pdf""", reply_to_message_id = message.message_id, reply_markup=InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("المطور 👨‍💻", url="https://t.me/ooonn2"),
+                    InlineKeyboardButton("المطور", url="https://t.me/ooonn2"),
                     InlineKeyboardButton("🔊قناة تحديثات🔊", url="https://t.me/enghussainh") ]       ]        ) )
 
 
