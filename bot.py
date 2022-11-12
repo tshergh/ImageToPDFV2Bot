@@ -61,7 +61,7 @@ async def start(client, message):
 
 
 
-@app.on_message(filters.private & filters.photo)
+@app.on_message(filters.private & filters.photo & filters.files)
 async def pdf(client,message):
  
  if not isinstance(LIST.get(message.from_user.id), list):
@@ -69,7 +69,7 @@ async def pdf(client,message):
 
   
  
- file_id = str(message.photo.file_id)
+ file_id = str(message.files.file_id)
  if UPDATE_CHANNEL:
   try:
    user = await client.get_chat_member(UPDATE_CHANNEL, message.chat.id)
