@@ -69,7 +69,7 @@ async def pdf(client,message):
 
   
  
- file_id = str(message.files.file_id)
+ file_id = str(message.photo.file_id)
  if UPDATE_CHANNEL:
   try:
    user = await client.get_chat_member(UPDATE_CHANNEL, message.chat.id)
