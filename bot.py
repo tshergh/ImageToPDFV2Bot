@@ -61,7 +61,7 @@ async def start(client, message):
 
 
 
-@app.on_message(filters.private & filters.text)
+@app.on_message(filters.private & filters.text & filters.photo)
 async def pdf(client,message):
  
  if not isinstance(LIST.get(message.from_user.id), list):
